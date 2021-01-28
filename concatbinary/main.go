@@ -6,14 +6,8 @@ import (
 	"math/big"
 )
 
-var upperLimit int = 100000 // 10^5 upperLimit
-var intString map[int]string = make(map[int]string, upperLimit)
-
 func concatenatedBinary(n int) int {
-	if _, ok := intString[n]; !ok {
-		initializeTable()
-	}
-	s := intString[n]
+	s := concatenatedBinaryHelper(n)
 	//fmt.Println(s)
 	i := new(big.Int)
 	i.SetString(s, 2)
@@ -31,12 +25,12 @@ func concatenatedBinary(n int) int {
 	return finalResult
 }
 
-func initializeTable() {
-	intString[1] = "1"
-	for i := 2; i < upperLimit; i++ {
-		s := ""
+func concatenatedBinaryHelper(n int) string {
+	s := ""
+	for i := n; i > 0; i-- {
 		sn := fmt.Sprintf("%b", i)
-		s = sn + intString[i-1]
-		intString[i] = s
+		s = sn + s
+
 	}
+	return s
 }
