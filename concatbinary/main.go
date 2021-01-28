@@ -1,36 +1,28 @@
 package concatbinary
 
-import (
-	"fmt"
-	"math"
-	"math/big"
-)
+const mod int = 1_000_000_007
+const upperLimit int = 10_000
 
+// the trick is, we have these strings of bits available already, they're called 'numbers'
 func concatenatedBinary(n int) int {
-	s := concatenatedBinaryHelper(n)
-	//fmt.Println(s)
-	i := new(big.Int)
-	i.SetString(s, 2)
-	//fmt.Println(i)
-	modValue := big.NewInt(int64(int(math.Pow10(9)) + 7))
-	result := i.Mod(i, modValue)
-	/*
-		for _, _ := range s {
-			//fmt.Println(d)
+	result := 0
+	for i := 1; i <= n; i++ {
+		shift := numToShift(i)
+		result = result << shift
+		result = result + i
+		for result > mod { // reduce if bigger. this is okay, becuase the biggest shift possible is for 10^5, which is less than 14 bits, with 10^9 being less than 20, 20+14, reduced by 20 bits, brings it back under. (19+ 14) = 33, -20 => 13.
+			result = result - mod
 		}
-	*/
-	// lookup formula
-	finalResult := int(result.Int64())
-	fmt.Println(finalResult)
-	return finalResult
+	}
+	return result
 }
 
-func concatenatedBinaryHelper(n int) string {
-	s := ""
-	for i := n; i > 0; i-- {
-		sn := fmt.Sprintf("%b", i)
-		s = sn + s
-
+// numToShift returns the position of the highest set bit. It is the
+// amount of right shifts that would be needed to zero out the number.
+func numToShift(n int) int {
+	r := 0
+	for ; n != 0; n = n >> 1 {
+		r++
 	}
-	return s
+	return r
 }
