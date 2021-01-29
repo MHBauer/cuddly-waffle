@@ -2,9 +2,30 @@ package concatbinary
 
 import (
 	"fmt"
-	"math"
 	"testing"
 )
+
+var testCases = []struct {
+	n               int
+	binaryExpansion string
+	answer          int
+}{
+	{1, "1", 1},
+	// {2, "110", 6},
+	// {3, "11011", 27},
+	// {4, "11011100", 220},
+	// {5, "", 1765},
+	// {6, "", 14126},
+	// {7, "", 113_015},
+	// {8, "", 1_808_248},
+	// {9, "", 28_931_977},
+	// {10, "", 462_911_642},
+	// {11, "", 406_586_234},
+	{12, "1101110010111011110001001101010111100", 505379714},
+	{1000, "", 499361981},
+	{8552, "", 65181209},
+	{100000, "", 757631812},
+}
 
 func TestShfitCount(t *testing.T) {
 	testCases := []struct {
@@ -27,29 +48,7 @@ func TestShfitCount(t *testing.T) {
 	}
 }
 
-func TestConcatBinary1(t *testing.T) {
-	fmt.Println(math.Pow10(5))
-	testCases := []struct {
-		n               int
-		binaryExpansion string
-		answer          int
-	}{
-		{1, "1", 1},
-		{2, "110", 6},
-		{3, "11011", 27},
-		{4, "11011100", 220},
-		{5, "", 1765},
-		{6, "", 14126},
-		{7, "", 113_015},
-		{8, "", 1_808_248},
-		{9, "", 28_931_977},
-		{10, "", 462_911_642},
-		{11, "", 406_586_234},
-		{12, "1101110010111011110001001101010111100", 505379714},
-		{1000, "", 499361981},
-		{8552, "", 65181209},
-		{100000, "", 757631812},
-	}
+func TestConcatBinary(t *testing.T) {
 	for _, tc := range testCases {
 		result := concatenatedBinary(tc.n)
 		if result != tc.answer {
@@ -58,6 +57,44 @@ func TestConcatBinary1(t *testing.T) {
 		} else {
 			t.Log(tc.answer, "ok")
 		}
+	}
+}
+
+func BenchmarkConcatBinarySubtraction(t *testing.B) {
+	for _, tc := range testCases {
+		tc := tc // capture range variable
+		t.Run(fmt.Sprint(tc.n), func(t *testing.B) {
+			t.ResetTimer()
+			for i := 0; i < t.N; i++ {
+				concatenatedBinarySubtraction(tc.n)
+			}
+		})
+
+	}
+}
+
+func BenchmarkConcatBinaryAlwaysMod(t *testing.B) {
+	for _, tc := range testCases {
+		tc := tc // capture range variable
+		t.Run(fmt.Sprint(tc.n), func(t *testing.B) {
+			t.ResetTimer()
+			for i := 0; i < t.N; i++ {
+				concatenatedBinaryAlwaysMod(tc.n)
+			}
+		})
+
+	}
+}
+
+func BenchmarkConcatBinaryConditionalMod(t *testing.B) {
+	for _, tc := range testCases {
+		tc := tc // capture range variable
+		t.Run(fmt.Sprint(tc.n), func(t *testing.B) {
+			t.ResetTimer()
+			for i := 0; i < t.N; i++ {
+				concatenatedBinaryConditionalMod(tc.n)
+			}
+		})
 	}
 }
 
