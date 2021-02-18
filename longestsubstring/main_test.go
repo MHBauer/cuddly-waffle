@@ -18,6 +18,7 @@ func TestLongestSubstring(t *testing.T) {
 		output string
 	}{
 		{"xxyxxesufntb", 2, "xxyxx"},
+		{"esufntbxxyxx", 2, "xxyxx"},
 		{"xxyxxesufntb", 1, "xx"},
 	}
 
