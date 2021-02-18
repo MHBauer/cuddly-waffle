@@ -1,6 +1,9 @@
 package longestsubstring
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestLongestSubstring(t *testing.T) {
 
@@ -15,10 +18,12 @@ func TestLongestSubstring(t *testing.T) {
 		output string
 	}{
 		{"xxyxxesufntb", 2, "xxyxx"},
+		{"xxyxxesufntb", 1, "xx"},
 	}
 
 	for _, tc := range testCases {
-		t.Run(tc.input, func(t *testing.T) {
+		tc := tc
+		t.Run(fmt.Sprint(tc.input, tc.k), func(t *testing.T) {
 			if longestSubstring(tc.input, tc.k) == tc.output {
 				t.Error("")
 			}
