@@ -1,0 +1,24 @@
+[package]
+name = "euler"
+version = "0.1.0"
+authors = ["Morgan Harold Bauer <bauer.morgan@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+
+[lib]
+name = "math"
+path = "src/math.rs"
+
+[dependencies]
+
+
+[dev-dependencies]
+criterion = "0.3"
+
+
+
+[[bench]]
+name = "1"
+harness = false

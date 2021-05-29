@@ -1,3 +1,5 @@
+use math::one::{brute, mathematical};
+
 fn main() {
     // big number sucessfully able to compute in bounds.
     // allows to show the difference in performance between the methods.
@@ -9,26 +11,6 @@ fn main() {
 
     // or just brute force...
     println!("{}", brute(n));
-}
-
-fn mathematical(n: u64) -> u64 {
-    let three = sum_divisible_by(3, n);
-    let five = sum_divisible_by(5, n);
-    let fifteen = sum_divisible_by(15, n); // double counted
-
-    // add up individual multiples and remove multiples of 15 one time.
-    return three + five - fifteen;
-}
-
-fn brute(n: u64) -> u64 {
-    let mut sum = 0;
-    for i in 1..n {
-        // rust ranges exclusive
-        if i % 3 == 0 || i % 5 == 0 {
-            sum += i
-        }
-    }
-    return sum;
 }
 
 // sum of multiples under N
@@ -45,15 +27,6 @@ fn brute(n: u64) -> u64 {
 // two functions needed.
 // 1. sum under n
 // 2. sum divisible by n
-
-fn sum_under_n(n: u64) -> u64 {
-    return (n * (n + 1)) / 2;
-}
-
-fn sum_divisible_by(d: u64, limit: u64) -> u64 {
-    let p = (limit - 1) / d;
-    return d * sum_under_n(p);
-}
 
 // tests, from the example 10 => 23
 #[test]
