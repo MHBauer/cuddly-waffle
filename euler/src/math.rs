@@ -250,3 +250,50 @@ Find the largest palindrome made from the product of two 3-digit numbers.
     }
 
 }
+
+pub mod five {
+/*
+2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+
+What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+*/
+    pub fn brute(n: u64) -> u64 {
+        for candidate in 1.. {
+            //println!("{}", candidate);
+            for i in 1..(n+1) {
+                //println!("{},{}", candidate, i);
+                if candidate % i != 0 {
+                    break
+                }
+                if i == n {
+                    return candidate
+                }
+            }
+            
+        }
+        0
+    }
+    
+    #[test]
+    fn test_five() {
+        assert_eq!(2,brute(2)); // new prime
+        assert_eq!(6,brute(3)); // new prime
+        assert_eq!(12,brute(4));
+        assert_eq!(60,brute(5)); // new prime
+        assert_eq!(60,brute(6)); 
+        assert_eq!(420,brute(7)); // new prime
+        assert_eq!(840,brute(8));
+        assert_eq!(2520,brute(9));
+        assert_eq!(2520,brute(10));
+        assert_eq!(27720,brute(11)); //new prime
+        assert_eq!(27720,brute(12));
+        assert_eq!(360360,brute(13)); // new prime
+        assert_eq!(360360,brute(14));
+        assert_eq!(360360,brute(15));
+        assert_eq!(720720,brute(16)); // not new prime....
+//        assert_eq!(12252240,brute(17)); // new prime
+//        assert_eq!(12252240,brute(18));
+//        assert_eq!(232792560,brute(19)); // new prime
+    }
+
+}
