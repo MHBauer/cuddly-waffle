@@ -186,3 +186,46 @@ pub mod three {
         assert_eq!(vec![5,7,13,29], brute2(13195));
     }
 }
+
+pub fn is_palindrome(n:u64) -> bool {
+    let mut ndiv = n;
+    let mut rem = 0;
+    println!("{},{}",rem,ndiv);
+    while ndiv > 0 {
+        rem = ndiv %10 + (rem*10);
+        ndiv /= 10;
+        println!("{},{}",rem,ndiv);
+    }
+    n == rem
+}
+
+#[test]
+fn test_is_palindrome() {
+    assert!(is_palindrome(9009));
+    assert!(is_palindrome(11));
+    assert!(is_palindrome(1));
+    assert!(is_palindrome(121));
+    assert!(!is_palindrome(12));
+}
+
+pub mod four {
+    /*
+A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
+
+Find the largest palindrome made from the product of two 3-digit numbers.
+     */
+    // three digit numbers, so 100 -> 999, i >= j, kind of n^2
+    // can we go from palindromes to factors? 3digits x 3digits => 5or6 digits
+    // count down from 999*999
+    // maybe a function to check palindromicity
+    // maybe avoid the int -> string conversion, not sure...
+    pub fn brute(n: u64) -> u64 {
+        return 0
+    }
+
+    #[test]
+    fn test_palindrome() {
+        assert_eq!(9009,brute(2));
+    }
+
+}
