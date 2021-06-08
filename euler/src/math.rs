@@ -158,18 +158,20 @@ pub mod three {
 
     // if there are a lot of factors, we should start from the bottom,
     // expecting to hit something quickly
-    pub fn brute2(mut n: u64) -> u64 {
+    pub fn brute2(mut n: u64) -> Vec<u64> {
+        let mut factors = Vec::new();
         for i in 2..n - 1 {
-            if n == 1 {
-                return 0;
-            }
             // check if we have a clean division
-            if n % i == 0 {
+            if n % i == 0 { // i is a factor
+                factors.push(i);
                 println!("{} * {} = {}", i, n / i, i * (n / i));
                 n = n / i;
             }
+            if n == 1 {
+                break;
+            }
         }
-        return 0; // input out of range. maybe panic.
+        return factors; // input out of range. maybe panic.
     }
     // some factors of the number, (not primes!!! just factors)
     //
@@ -177,4 +179,10 @@ pub mod three {
     // 71 * 8462696833  = 600851475143
     // square root is useful for determining the upper limit of the
     // things to be used as trials, assuming we start low.
+
+    // when breaking out the factors implemntation, take this as well
+    #[test]
+    fn test_factors() {
+        assert_eq!(vec![5,7,13,29], brute2(13195));
+    }
 }
