@@ -123,3 +123,58 @@ pub mod two {
         return 0;
     }
 }
+
+pub mod three {
+    /*
+    The prime factors of 13195 are 5, 7, 13 and 29.
+
+    What is the largest prime factor of the number 600851475143 ?
+     */
+
+    // so now we need to factor numbers.
+    // 600_851_475_143 has 12 digits, easily fitting in u64, but too big for u32.
+    //
+    // we want the largest one, so in theory, we might want to start
+    // from the square root of the value and iterate downward
+    //
+    // ^ this doesn't make any sense.
+    //
+    // let's do trial division! this takes longer than a minute.
+    //
+    // Could be easily parallelized.
+    //
+    // my guess is primes and factors is going to show up a lot...
+    //
+    pub fn brute(n: u64) -> u64 {
+        for i in (2..n - 1).rev() {
+            // check if we have a clean division
+            if n % i == 0 {
+                println!("{} * {} = {}", i, n / i, i * (n / i));
+                return i; // we're going from high to low, so first one found is it.
+            }
+        }
+        return 0; // input out of range. maybe panic.
+    }
+
+    // if there are a lot of factors, we should start from the bottom,
+    // expecting to hit something quickly
+    pub fn brute2(mut n: u64) -> u64 {
+        for i in 2..n - 1 {
+            if n == 1 {
+                return 0;
+            }
+            // check if we have a clean division
+            if n % i == 0 {
+                println!("{} * {} = {}", i, n / i, i * (n / i));
+                n = n / i;
+            }
+        }
+        return 0; // input out of range. maybe panic.
+    }
+    // some factors of the number, (not primes!!! just factors)
+    //
+    // 486847 * 1234169 = 600851475143
+    // 71 * 8462696833  = 600851475143
+    // square root is useful for determining the upper limit of the
+    // things to be used as trials, assuming we start low.
+}
