@@ -190,11 +190,11 @@ pub mod three {
 pub fn is_palindrome(n:u64) -> bool {
     let mut ndiv = n;
     let mut rem = 0;
-    println!("{},{}",rem,ndiv);
+    //println!("{},{}",rem,ndiv);
     while ndiv > 0 {
         rem = ndiv %10 + (rem*10);
         ndiv /= 10;
-        println!("{},{}",rem,ndiv);
+        //println!("{},{}",rem,ndiv);
     }
     n == rem
 }
@@ -220,12 +220,33 @@ Find the largest palindrome made from the product of two 3-digit numbers.
     // maybe a function to check palindromicity
     // maybe avoid the int -> string conversion, not sure...
     pub fn brute(n: u64) -> u64 {
-        return 0
+        // go from n to digit bounds...
+        // 10^n
+        let upper_limit = u64::pow(10,n.try_into().unwrap());
+        let mut largest_found = 0;
+        use std::convert::TryInto;
+        for i in (1..upper_limit).rev() {
+            for j in (i..upper_limit).rev() {
+                let k = i*j;
+                if k < largest_found{
+                    break;
+                }
+                if super::is_palindrome(k) {
+                    println!("{},{}={}",i,j,k);
+                    if k > largest_found {
+                        largest_found = k;
+                    }
+                }
+            }
+        }
+        println!("{}",largest_found);
+        return largest_found;
     }
 
     #[test]
     fn test_palindrome() {
         assert_eq!(9009,brute(2));
+        assert_eq!(99000099,brute(4));
     }
 
 }
