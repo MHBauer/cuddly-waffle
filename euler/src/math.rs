@@ -72,7 +72,31 @@ fn test_fib_rec() {
 }
 
 fn fibonacci(n: u64) -> u64 {
-    return 0;
+    unsafe {
+        N += 1;
+    }
+    if n == 0 {
+        return 0; 
+    }
+    let mut i = 0;
+    let mut j = 1;
+    for _ in 1..n {
+        let t = i;
+        i = j;
+        j = i+ t;
+    }
+    j
+}
+
+#[test]
+fn test_fib() {
+    assert_eq!(0, fibonacci(0));
+    assert_eq!(1, fibonacci(1));
+    assert_eq!(1, fibonacci(2));
+    assert_eq!(2, fibonacci(3));
+    assert_eq!(3, fibonacci(4));
+    assert_eq!(5, fibonacci(5));
+    assert_eq!(8, fibonacci(6));
 }
 
 pub mod two {
@@ -96,6 +120,9 @@ pub mod two {
     pub fn brute(n: u64) -> u64 {
         use super::fibonacci_recursive;
         use super::N;
+        unsafe {
+            N = 0;
+        }
         let mut sum = 0;
         for x in 0.. {
             let y = fibonacci_recursive(x);
@@ -118,9 +145,41 @@ pub mod two {
         return sum;
     }
 
+    pub fn iterative(n: u64) -> u64 {
+        use super::fibonacci;
+        use super::N;
+        unsafe {
+            N = 0;
+        }
+        let mut sum = 0;
+        for x in 0.. {
+            let y = fibonacci(x);
+            println!("x{},y{}", x, y);
+            if y > n {
+                break;
+            }
+            if y % 2 == 0 {
+                sum += y;
+            }
+        }
+        unsafe {
+            println!("N: {}", N);
+        }
+        return sum;
+    }
+
     // a smarter way to do this will include the implementation of fib as it iterates, checking for evenness and limit.
+
+    // the mathematical way is to notice there's a relationship for the evens.
     pub fn mathematical(n: u64) -> u64 {
         return 0;
+    }
+
+    // tests
+    #[test]
+    fn test_two() {
+        let n = 4_000_000;
+        assert_eq!(brute (n), iterative(n));
     }
 }
 
