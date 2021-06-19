@@ -10,4 +10,4 @@
   (format t "~d~%" y1)
   (format t "~d~%" y2)
   (format t "~d~%" (= y1 y2)))
-(quit)
+

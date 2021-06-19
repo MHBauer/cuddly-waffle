@@ -28,7 +28,7 @@ y has a leading term that is constructed of r or c, and a lagging term that is a
 
 # basic results 
 
-hyperfine 'sbcl --load .\akrsa.lisp' 'python.exe .\akrsa.py'
+hyperfine 'sbcl --non-interactive --load .\akrsa.lisp' 'python.exe .\akrsa.py'
 Benchmark #1: sbcl --load .\akrsa.lisp
   Time (mean ± σ):      57.4 ms ±   2.5 ms    [User: 2.6 ms, System: 4.9 ms]
   Range (min … max):    52.4 ms …  67.9 ms    49 runs
