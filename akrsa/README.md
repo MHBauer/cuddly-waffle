@@ -1,4 +1,4 @@
-# The Prompt
+# The Prompt From a Friend
 The napkin sized piece of paper contains:
 
 ```
